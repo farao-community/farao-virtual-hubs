@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.farao-community.farao</groupId>
+	<artifactId>farao-virtual-hubs</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>FARAO virtual hubs</name>
+	<description>Virtual hubs management for FARAO framework</description>
+	<url>http://www.farao-community.com</url>
+
+	<licenses>
+		<license>
+			<name>Mozilla Public License, Version 2.0</name>
+			<url>https://www.mozilla.org/en-US/MPL/2.0/</url>
+		</license>
+	</licenses>
+
+	<scm>
+		<connection>scm:git:https://github.com/farao-community/farao-virtual-hubs.git</connection>
+		<developerConnection>scm:git:https://github.com/farao-community/farao-virtual-hubs.git</developerConnection>
+		<url>https://github.com/farao-community/farao-virtual-hubs.git</url>
+	</scm>
+
+	<developers>
+		<developer>
+			<name>Sebastien MURGEY</name>
+			<email>sebastien.murgey@rte-france.com</email>
+			<organization>RTE</organization>
+			<organizationUrl>http://www.rte-france.com</organizationUrl>
+		</developer>
+	</developers>
+
+	<modules>
+		<module>virtual-hubs-api</module>
+		<module>virtual-hubs-configuration-client</module>
+		<module>virtual-hubs-configuration-server</module>
+		<module>virtual-hubs-json</module>
+		<module>virtual-hubs-network-extension</module>
+		<module>virtual-hubs-network-extension-client</module>
+		<module>virtual-hubs-network-extension-server</module>
+		<module>virtual-hubs-xml</module>
+	</modules>
+
+	<properties>
+		<java.version>11</java.version>
+
+		<jackson.databind.version>2.11.0</jackson.databind.version>
+		<junit.version>5.6.2</junit.version>
+		<maven.compiler.version>3.8.1</maven.compiler.version>
+		<modelmapper.version>2.3.8</modelmapper.version>
+		<springboot.version>2.3.1.RELEASE</springboot.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>${springboot.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-databind</artifactId>
+				<version>${jackson.databind.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.modelmapper</groupId>
+				<artifactId>modelmapper</artifactId>
+				<version>${modelmapper.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.junit.jupiter</groupId>
+				<artifactId>junit-jupiter-engine</artifactId>
+				<version>${junit.version}</version>
+				<scope>test</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven.compiler.version}</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+
+		</plugins>
+	</build>
+
+</project>
