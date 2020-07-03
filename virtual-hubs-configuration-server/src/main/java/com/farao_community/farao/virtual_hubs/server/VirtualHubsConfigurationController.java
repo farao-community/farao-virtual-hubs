@@ -7,13 +7,11 @@
 package com.farao_community.farao.virtual_hubs.server;
 
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 /**
  * @author Sebastien Murgey {@literal <sebastien.murgey@rte-france.com>}
@@ -32,8 +30,8 @@ public class VirtualHubsConfigurationController {
         service.publishVirtualHubsConfiguration(configurationFile, validFrom, validTo);
     }
 
-    @GetMapping()
-    public String getConfigurationAtDate(@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime instant) {
-        return service.getConfigurationAtDate(instant);
+    @GetMapping
+    public String getConfigurationAtDate(@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime instant) {
+        return service.getConfigurationAtDate(Optional.ofNullable(instant).orElse(LocalDateTime.now()));
     }
 }

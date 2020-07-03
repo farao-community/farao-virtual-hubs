@@ -8,22 +8,17 @@ package com.farao_community.farao.virtual_hubs.client;
 
 import com.farao_community.farao.virtual_hubs.VirtualHubsConfiguration;
 import com.farao_community.farao.virtual_hubs.json.JsonVirtualHubsConfiguration;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.client.methods.RequestBuilder;
-import org.apache.http.client.utils.URIBuilder;
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.commons.io.IOUtils;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.MediaType;
+import org.springframework.http.client.MultipartBodyBuilder;
+import org.springframework.web.reactive.function.BodyInserters;
+import org.springframework.web.reactive.function.client.ClientResponse;
+import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.util.UriComponentsBuilder;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -40,45 +35,51 @@ public class VirtualHubsConfigurationService implements AutoCloseable {
     }
 
     public void publish(InputStream is, LocalDateTime validFrom, LocalDateTime validTo) {
-        try {
-            URI uri = (new URIBuilder()).setScheme("http").setHost(host).setPort(port).setPath("/virtual-hubs-configuration/publish").build();
+        URI uri = UriComponentsBuilder.newInstance().scheme("http").host(host).port(port).path("/virtual-hubs-configuration/publish").build().toUri();
+        WebClient client = WebClient.create();
+        MultipartBodyBuilder builder = new MultipartBodyBuilder();
+        builder.part("configurationFile", getStreamBytes(is), MediaType.APPLICATION_XML).filename("inputFile.xml");
+        builder.part("validFrom", validFrom.format(DateTimeFormatter.ISO_DATE_TIME));
+        builder.part("validTo", validTo.format(DateTimeFormatter.ISO_DATE_TIME));
+        ClientResponse response =client.post().uri(uri).body(BodyInserters.fromMultipartData(builder.build())).exchange().block();
 
-            HttpClient httpClient = HttpClientBuilder.create().build();
-            HttpEntity entity = MultipartEntityBuilder.create()
-                    .addBinaryBody("configurationFile", is.readAllBytes(), ContentType.APPLICATION_XML, "inputfile.xml")
-                    .addTextBody("validFrom", validFrom.format(DateTimeFormatter.ISO_DATE_TIME))
-                    .addTextBody("validTo", validTo.format(DateTimeFormatter.ISO_DATE_TIME))
-                    .build();
-            HttpUriRequest request = RequestBuilder.post(uri).setEntity(entity).build();
-
-            HttpResponse httpResponse = httpClient.execute(request);
-            if (httpResponse.getStatusLine().getStatusCode() != 200) {
-                throw new RuntimeException("Erreur " + httpResponse.getStatusLine().getStatusCode());
-            }
-        } catch (URISyntaxException | IOException e) {
-            throw new RuntimeException(e);
+        if (!response.statusCode().is2xxSuccessful()) {
+            throw new RuntimeException("Error " + response.statusCode());
         }
     }
 
-    public VirtualHubsConfiguration retrieve(LocalDateTime dateTime) {
+    private byte[] getStreamBytes(InputStream is) {
         try {
-            URI uri = (new URIBuilder()).setScheme("http").setHost(host).setPort(port).setPath("/virtual-hubs-configuration").build();
-
-            HttpClient httpClient = HttpClientBuilder.create().build();
-            HttpEntity entity = MultipartEntityBuilder.create()
-                    .addTextBody("instant", dateTime.format(DateTimeFormatter.ISO_DATE_TIME))
-                    .build();
-
-            HttpUriRequest request = RequestBuilder.get(uri).setEntity(entity).build();
-
-            HttpResponse httpResponse = httpClient.execute(request);
-            if (httpResponse.getStatusLine().getStatusCode() != 200) {
-                throw new RuntimeException("Erreur " + httpResponse.getStatusLine().getStatusCode());
-            }
-            return JsonVirtualHubsConfiguration.importConfiguration(httpResponse.getEntity().getContent());
-        } catch (URISyntaxException | IOException e) {
-            throw new RuntimeException(e);
+            return IOUtils.toByteArray(is);
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
         }
+    }
+
+    public VirtualHubsConfiguration retrieve() {
+        URI uri = UriComponentsBuilder.newInstance().scheme("http").host(host).port(port)
+                .path("/virtual-hubs-configuration")
+                .build().toUri();
+        return retrieve(uri);
+    }
+
+    public VirtualHubsConfiguration retrieve(LocalDateTime dateTime) {
+        URI uri = UriComponentsBuilder.newInstance().scheme("http").host(host).port(port)
+                .path("/virtual-hubs-configuration").queryParam("instant", dateTime.format(DateTimeFormatter.ISO_DATE_TIME))
+                .build().toUri();
+        return retrieve(uri);
+    }
+
+    private VirtualHubsConfiguration retrieve(URI uri) {
+        WebClient client = WebClient.create();
+        ClientResponse response = client.get().uri(uri).exchange().block();
+
+        if (!response.statusCode().is2xxSuccessful()) {
+            throw new RuntimeException("Error " + response.statusCode());
+        }
+
+        ByteArrayResource resource = response.bodyToMono(ByteArrayResource.class).block();
+        return JsonVirtualHubsConfiguration.importConfiguration(new ByteArrayInputStream(resource.getByteArray()));
     }
 
     @Override
