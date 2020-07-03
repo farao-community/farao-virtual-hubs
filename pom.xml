@@ -39,9 +39,11 @@
 		<module>virtual-hubs-configuration-client</module>
 		<module>virtual-hubs-configuration-server</module>
 		<module>virtual-hubs-json</module>
+		<!--
 		<module>virtual-hubs-network-extension</module>
 		<module>virtual-hubs-network-extension-client</module>
 		<module>virtual-hubs-network-extension-server</module>
+		-->
 		<module>virtual-hubs-xml</module>
 	</modules>
 
