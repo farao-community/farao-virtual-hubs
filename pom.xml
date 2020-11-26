@@ -63,6 +63,7 @@
 		<maven.javadoc.version>3.0.0</maven.javadoc.version>
 		<maven.source.version>3.0.1</maven.source.version>
 		<modelmapper.version>2.3.8</modelmapper.version>
+		<powsybl.core.version>3.7.1</powsybl.core.version>
 		<springboot.version>2.3.1.RELEASE</springboot.version>
 	</properties>
 
@@ -84,6 +85,16 @@
 				<groupId>com.fasterxml.jackson.core</groupId>
 				<artifactId>jackson-databind</artifactId>
 				<version>${jackson.databind.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.powsybl</groupId>
+				<artifactId>powsybl-commons</artifactId>
+				<version>${powsybl.core.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.powsybl</groupId>
+				<artifactId>powsybl-iidm-api</artifactId>
+				<version>${powsybl.core.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.modelmapper</groupId>
