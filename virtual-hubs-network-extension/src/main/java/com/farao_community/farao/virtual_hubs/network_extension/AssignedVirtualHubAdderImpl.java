@@ -12,44 +12,45 @@ import com.powsybl.iidm.network.VoltageLevel;
 /**
  * @author Baptiste Seguinot {@literal <baptiste.seguinot@rte-france.com>}
  */
-public class VirtualHubExtensionAdder extends AbstractExtensionAdder<VoltageLevel, VirtualHubExtension> {
+public class AssignedVirtualHubAdderImpl extends AbstractExtensionAdder<VoltageLevel, AssignedVirtualHub> implements AssignedVirtualHubAdder {
 
     private String code;
     private String eic;
     private boolean isMcParticipant;
     private String nodeName;
+    private String relatedMa;
 
-    public VirtualHubExtensionAdder(VoltageLevel voltageLevel) {
+    public AssignedVirtualHubAdderImpl(VoltageLevel voltageLevel) {
         super(voltageLevel);
     }
 
-    public VirtualHubExtensionAdder withCode(String code) {
+    public AssignedVirtualHubAdderImpl withCode(String code) {
         this.code = code;
         return this;
     }
 
-    public VirtualHubExtensionAdder withEic(String eic) {
+    public AssignedVirtualHubAdderImpl withEic(String eic) {
         this.eic = eic;
         return this;
     }
 
-    public VirtualHubExtensionAdder withMcParticipant(boolean isMcParticipant) {
+    public AssignedVirtualHubAdderImpl withMcParticipant(boolean isMcParticipant) {
         this.isMcParticipant = isMcParticipant;
         return this;
     }
 
-    public VirtualHubExtensionAdder withNodeName(String nodeName) {
+    public AssignedVirtualHubAdderImpl withNodeName(String nodeName) {
         this.nodeName = nodeName;
         return this;
     }
 
-    @Override
-    public Class<VirtualHubExtension> getExtensionClass() {
-        return VirtualHubExtension.class;
+    public AssignedVirtualHubAdder withRelatedMa(String relatedMa) {
+        this.relatedMa = relatedMa;
+        return this;
     }
 
     @Override
-    public VirtualHubExtension createExtension(VoltageLevel voltageLevel) {
-        return new VirtualHubExtension(code, eic, isMcParticipant, nodeName);
+    public AssignedVirtualHubImpl createExtension(VoltageLevel voltageLevel) {
+        return new AssignedVirtualHubImpl(code, eic, isMcParticipant, nodeName, relatedMa);
     }
 }

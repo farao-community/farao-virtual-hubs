@@ -14,18 +14,20 @@ import java.util.Objects;
 /**
  * @author Baptiste Seguinot {@literal <baptiste.seguinot@rte-france.com>}
  */
-public class VirtualHubExtension extends AbstractExtension<VoltageLevel> {
+public class AssignedVirtualHubImpl extends AbstractExtension<VoltageLevel> implements AssignedVirtualHub {
 
     private final String code;
     private final String eic;
     private final boolean isMcParticipant;
     private final String nodeName;
+    private final String relatedMa;
 
-    public VirtualHubExtension(String code, String eic, boolean isMcParticipant, String nodeName) {
-        this.code = Objects.requireNonNull(code, "VirtualHub creation does not allow null code");
-        this.eic = Objects.requireNonNull(eic, "VirtualHub creation does not allow null eic");
+    public AssignedVirtualHubImpl(String code, String eic, boolean isMcParticipant, String nodeName, String relatedMa) {
+        this.code = code;
+        this.eic = Objects.requireNonNull(eic, "AssignedVirtualHubImpl creation does not allow null eic");
         this.isMcParticipant = isMcParticipant;
-        this.nodeName = Objects.requireNonNull(nodeName, "VirtualHub creation does not allow null nodeName");
+        this.nodeName = nodeName;
+        this.relatedMa = relatedMa;
     }
 
     public String getCode() {
@@ -44,8 +46,8 @@ public class VirtualHubExtension extends AbstractExtension<VoltageLevel> {
         return nodeName;
     }
 
-    @Override
-    public String getName() {
-        return "virtualHubExtension";
+    public String getRelatedMa() {
+        return relatedMa;
     }
+
 }

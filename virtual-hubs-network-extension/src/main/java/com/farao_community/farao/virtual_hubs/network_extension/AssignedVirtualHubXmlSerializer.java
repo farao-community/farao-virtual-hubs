@@ -1,0 +1,63 @@
+/*
+ * Copyright (c) 2020, RTE (http://www.rte-france.com)
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ */
+package com.farao_community.farao.virtual_hubs.network_extension;
+
+import com.google.auto.service.AutoService;
+import com.powsybl.commons.extensions.AbstractExtensionXmlSerializer;
+import com.powsybl.commons.extensions.ExtensionXmlSerializer;
+import com.powsybl.commons.xml.XmlReaderContext;
+import com.powsybl.commons.xml.XmlWriterContext;
+import com.powsybl.iidm.network.VoltageLevel;
+
+import javax.xml.stream.XMLStreamException;
+import java.util.Objects;
+
+/**
+ * @author Baptiste Seguinot {@literal <baptiste.seguinot@rte-france.com>}
+ */
+@AutoService(ExtensionXmlSerializer.class)
+public class AssignedVirtualHubXmlSerializer extends AbstractExtensionXmlSerializer<VoltageLevel, AssignedVirtualHub> {
+
+    public AssignedVirtualHubXmlSerializer() {
+        super("assignedVirtualHub", "network", AssignedVirtualHub.class, false,
+            "assignedVirtualHub.xsd",
+            "http://www.powsybl.org/schema/iidm/ext/assigned_virtual_hub/1_0", "avh");
+    }
+
+    @Override
+    public void write(AssignedVirtualHub assignedVirtualHub, XmlWriterContext context) throws XMLStreamException {
+        if (!Objects.isNull(assignedVirtualHub.getCode())) {
+            context.getExtensionsWriter().writeAttribute("code", assignedVirtualHub.getCode());
+        }
+        context.getExtensionsWriter().writeAttribute("eic", assignedVirtualHub.getEic());
+        context.getExtensionsWriter().writeAttribute("isMcParticipant", Boolean.toString(assignedVirtualHub.isMcParticipant()));
+
+        if (!Objects.isNull(assignedVirtualHub.getNodeName())) {
+            context.getExtensionsWriter().writeAttribute("nodeName", assignedVirtualHub.getNodeName());
+        }
+        if (!Objects.isNull(assignedVirtualHub.getRelatedMa())) {
+            context.getExtensionsWriter().writeAttribute("relatedMa", assignedVirtualHub.getRelatedMa());
+        }
+    }
+
+    @Override
+    public AssignedVirtualHub read(VoltageLevel voltageLevel, XmlReaderContext context) {
+        String code = context.getReader().getAttributeValue(null, "code");
+        String eic = context.getReader().getAttributeValue(null, "eic");
+        String isMcParticipantAsString = context.getReader().getAttributeValue(null, "isMcParticipant");
+        String nodeName = context.getReader().getAttributeValue(null, "nodeName");
+        String relatedMa = context.getReader().getAttributeValue(null, "relatedMa");
+
+        boolean isMcParticipant = false;
+        if (isMcParticipantAsString.equals(Boolean.toString(true))) {
+            isMcParticipant = true;
+        }
+
+        voltageLevel.newExtension(AssignedVirtualHubAdder.class).withCode(code).withEic(eic).withMcParticipant(isMcParticipant).withNodeName(nodeName).withRelatedMa(relatedMa).add();
+        return voltageLevel.getExtension(AssignedVirtualHub.class);
+    }
+}
