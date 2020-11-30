@@ -40,7 +40,7 @@
 		<module>virtual-hubs-configuration-server</module>
 		<module>virtual-hubs-json</module>
 		<module>virtual-hubs-network-extension</module>
-
+		<module>virtual-hubs-network-extension-builder</module>
 		<!--
 		<module>virtual-hubs-network-extension-client</module>
 		<module>virtual-hubs-network-extension-server</module>
