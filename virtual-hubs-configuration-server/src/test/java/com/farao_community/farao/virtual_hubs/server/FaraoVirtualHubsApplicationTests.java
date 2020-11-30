@@ -15,8 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class FaraoVirtualHubsApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
-
+    @Test
+    void contextLoads() { }
 }
+

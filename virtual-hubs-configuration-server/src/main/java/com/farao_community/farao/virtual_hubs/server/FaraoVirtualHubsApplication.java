@@ -12,11 +12,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * @author Sebastien Murgey {@literal <sebastien.murgey at rte-france.com>}
  */
+@SuppressWarnings("hideutilityclassconstructor")
 @SpringBootApplication
 public class FaraoVirtualHubsApplication {
-
-	public static void main(String[] args) {
-		SpringApplication.run(FaraoVirtualHubsApplication.class, args);
-	}
-
+    public static void main(String[] args) {
+        SpringApplication.run(FaraoVirtualHubsApplication.class, args);
+    }
 }

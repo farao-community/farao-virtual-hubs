@@ -41,7 +41,7 @@ public class VirtualHubsConfigurationService implements AutoCloseable {
         builder.part("configurationFile", getStreamBytes(is), MediaType.APPLICATION_XML).filename("inputFile.xml");
         builder.part("validFrom", validFrom.format(DateTimeFormatter.ISO_DATE_TIME));
         builder.part("validTo", validTo.format(DateTimeFormatter.ISO_DATE_TIME));
-        ClientResponse response =client.post().uri(uri).body(BodyInserters.fromMultipartData(builder.build())).exchange().block();
+        ClientResponse response = client.post().uri(uri).body(BodyInserters.fromMultipartData(builder.build())).exchange().block();
 
         if (!response.statusCode().is2xxSuccessful()) {
             throw new RuntimeException("Error " + response.statusCode());
