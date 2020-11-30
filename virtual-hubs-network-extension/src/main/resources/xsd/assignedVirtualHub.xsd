@@ -9,8 +9,7 @@
 -->
 <xs:schema version="1.0"
            xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           xmlns:iidm="http://www.powsybl.org/schema/iidm/1_4"
-           targetNamespace="http://www.powsybl.org/schema/iidm/ext/virtual_hub_extension/1_0"
+           targetNamespace="https://farao-community.github.io/schema/iidm/ext/virtual_hub_extension/1_0"
            elementFormDefault="qualified">
     <xs:import namespace="http://www.powsybl.org/schema/iidm/1_4" schemaLocation="iidm_V1_4.xsd"/>
     <xs:complexType name="assignedVirtualHub">

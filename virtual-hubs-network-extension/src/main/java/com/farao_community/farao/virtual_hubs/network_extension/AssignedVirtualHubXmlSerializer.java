@@ -25,7 +25,7 @@ public class AssignedVirtualHubXmlSerializer extends AbstractExtensionXmlSeriali
     public AssignedVirtualHubXmlSerializer() {
         super("assignedVirtualHub", "network", AssignedVirtualHub.class, false,
             "assignedVirtualHub.xsd",
-            "http://www.powsybl.org/schema/iidm/ext/assigned_virtual_hub/1_0", "avh");
+            "https://farao-community.github.io/schema/iidm/ext/virtual_hub_extension/1_0", "farao");
     }
 
     @Override
