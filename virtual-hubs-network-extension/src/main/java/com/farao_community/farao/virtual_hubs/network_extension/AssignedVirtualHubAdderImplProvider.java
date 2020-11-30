@@ -9,13 +9,13 @@ package com.farao_community.farao.virtual_hubs.network_extension;
 
 import com.google.auto.service.AutoService;
 import com.powsybl.commons.extensions.ExtensionAdderProvider;
-import com.powsybl.iidm.network.VoltageLevel;
+import com.powsybl.iidm.network.Injection;
 
 /**
  * @author Baptiste Seguinot {@literal <baptiste.seguinot@rte-france.com>}
  */
 @AutoService(ExtensionAdderProvider.class)
-public class AssignedVirtualHubAdderImplProvider implements ExtensionAdderProvider<VoltageLevel, AssignedVirtualHub, AssignedVirtualHubAdderImpl> {
+public class AssignedVirtualHubAdderImplProvider<T extends Injection<T>> implements ExtensionAdderProvider<T, AssignedVirtualHub<T>, AssignedVirtualHubAdderImpl<T>> {
 
     @Override
     public String getImplementationName() {
@@ -28,8 +28,8 @@ public class AssignedVirtualHubAdderImplProvider implements ExtensionAdderProvid
     }
 
     @Override
-    public AssignedVirtualHubAdderImpl newAdder(VoltageLevel extendable) {
-        return new AssignedVirtualHubAdderImpl(extendable);
+    public AssignedVirtualHubAdderImpl<T> newAdder(T extendable) {
+        return new AssignedVirtualHubAdderImpl<>(extendable);
     }
 
 }

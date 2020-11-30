@@ -7,8 +7,9 @@
 package com.farao_community.farao.virtual_hubs.network_extension;
 
 import com.powsybl.iidm.import_.Importers;
+import com.powsybl.iidm.network.DanglingLine;
+import com.powsybl.iidm.network.Generator;
 import com.powsybl.iidm.network.Network;
-import com.powsybl.iidm.network.VoltageLevel;
 import com.powsybl.iidm.xml.NetworkXml;
 import org.junit.Test;
 
@@ -29,10 +30,10 @@ public class AssignedVirtualHubXmlSerializerTest {
         Network originalNetwork = Importers.loadNetwork(SMALL_NETWORK_FILE_NAME, getClass().getResourceAsStream("/" + SMALL_NETWORK_FILE_NAME));
 
         // add extensions
-        VoltageLevel vl1 = originalNetwork.getDanglingLine("FFR1AA1  X_GBFR1  1").getTerminal().getVoltageLevel();
-        VoltageLevel vl2 = originalNetwork.getVoltageLevel("NNL3AA1");
+        DanglingLine dl = originalNetwork.getDanglingLine("FFR1AA1  X_GBFR1  1");
+        Generator g = originalNetwork.getGenerator("NNL1AA1 _generator");
 
-        vl1.newExtension(AssignedVirtualHubAdder.class).
+        dl.newExtension(AssignedVirtualHubAdder.class).
             withCode("code1").
             withEic("17YXTYUDHGKAAAAS").
             withMcParticipant(true).
@@ -40,7 +41,7 @@ public class AssignedVirtualHubXmlSerializerTest {
             withRelatedMa("FR").
             add();
 
-        vl2.newExtension(AssignedVirtualHubAdder.class).
+        g.newExtension(AssignedVirtualHubAdder.class).
             withCode("code2").
             withEic("15XGDYRHKLKAAAAS").
             withMcParticipant(false).
@@ -55,8 +56,8 @@ public class AssignedVirtualHubXmlSerializerTest {
         Network roundTripedNetwork = NetworkXml.read(is);
 
         // check results
-        AssignedVirtualHub avh1 = roundTripedNetwork.getDanglingLine("FFR1AA1  X_GBFR1  1").getTerminal().getVoltageLevel().getExtension(AssignedVirtualHub.class);
-        AssignedVirtualHub avh2 = originalNetwork.getVoltageLevel("NNL3AA1").getExtension(AssignedVirtualHub.class);
+        AssignedVirtualHub<DanglingLine> avh1 = roundTripedNetwork.getDanglingLine("FFR1AA1  X_GBFR1  1").getExtension(AssignedVirtualHub.class);
+        AssignedVirtualHub<Generator> avh2 = originalNetwork.getGenerator("NNL1AA1 _generator").getExtension(AssignedVirtualHub.class);
 
         assertNotNull(avh1);
         assertEquals("code1", avh1.getCode());

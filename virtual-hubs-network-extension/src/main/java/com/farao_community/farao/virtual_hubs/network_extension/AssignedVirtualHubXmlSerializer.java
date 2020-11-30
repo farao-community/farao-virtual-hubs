@@ -11,7 +11,7 @@ import com.powsybl.commons.extensions.AbstractExtensionXmlSerializer;
 import com.powsybl.commons.extensions.ExtensionXmlSerializer;
 import com.powsybl.commons.xml.XmlReaderContext;
 import com.powsybl.commons.xml.XmlWriterContext;
-import com.powsybl.iidm.network.VoltageLevel;
+import com.powsybl.iidm.network.Injection;
 
 import javax.xml.stream.XMLStreamException;
 import java.util.Objects;
@@ -20,7 +20,7 @@ import java.util.Objects;
  * @author Baptiste Seguinot {@literal <baptiste.seguinot@rte-france.com>}
  */
 @AutoService(ExtensionXmlSerializer.class)
-public class AssignedVirtualHubXmlSerializer extends AbstractExtensionXmlSerializer<VoltageLevel, AssignedVirtualHub> {
+public class AssignedVirtualHubXmlSerializer<T extends Injection<T>> extends AbstractExtensionXmlSerializer<T, AssignedVirtualHub<T>> {
 
     public AssignedVirtualHubXmlSerializer() {
         super("assignedVirtualHub", "network", AssignedVirtualHub.class, false,
@@ -29,7 +29,7 @@ public class AssignedVirtualHubXmlSerializer extends AbstractExtensionXmlSeriali
     }
 
     @Override
-    public void write(AssignedVirtualHub assignedVirtualHub, XmlWriterContext context) throws XMLStreamException {
+    public void write(AssignedVirtualHub<T> assignedVirtualHub, XmlWriterContext context) throws XMLStreamException {
         if (!Objects.isNull(assignedVirtualHub.getCode())) {
             context.getExtensionsWriter().writeAttribute("code", assignedVirtualHub.getCode());
         }
@@ -45,7 +45,7 @@ public class AssignedVirtualHubXmlSerializer extends AbstractExtensionXmlSeriali
     }
 
     @Override
-    public AssignedVirtualHub read(VoltageLevel voltageLevel, XmlReaderContext context) {
+    public AssignedVirtualHub<T> read(T extendable, XmlReaderContext context) {
         String code = context.getReader().getAttributeValue(null, "code");
         String eic = context.getReader().getAttributeValue(null, "eic");
         String isMcParticipantAsString = context.getReader().getAttributeValue(null, "isMcParticipant");
@@ -57,7 +57,7 @@ public class AssignedVirtualHubXmlSerializer extends AbstractExtensionXmlSeriali
             isMcParticipant = true;
         }
 
-        voltageLevel.newExtension(AssignedVirtualHubAdder.class).withCode(code).withEic(eic).withMcParticipant(isMcParticipant).withNodeName(nodeName).withRelatedMa(relatedMa).add();
-        return voltageLevel.getExtension(AssignedVirtualHub.class);
+        extendable.newExtension(AssignedVirtualHubAdder.class).withCode(code).withEic(eic).withMcParticipant(isMcParticipant).withNodeName(nodeName).withRelatedMa(relatedMa).add();
+        return extendable.getExtension(AssignedVirtualHub.class);
     }
 }

@@ -7,14 +7,14 @@
 package com.farao_community.farao.virtual_hubs.network_extension;
 
 import com.powsybl.commons.extensions.AbstractExtension;
-import com.powsybl.iidm.network.VoltageLevel;
+import com.powsybl.iidm.network.Injection;
 
 import java.util.Objects;
 
 /**
  * @author Baptiste Seguinot {@literal <baptiste.seguinot@rte-france.com>}
  */
-public class AssignedVirtualHubImpl extends AbstractExtension<VoltageLevel> implements AssignedVirtualHub {
+public class AssignedVirtualHubImpl<T extends Injection<T>> extends AbstractExtension<T> implements AssignedVirtualHub<T> {
 
     private final String code;
     private final String eic;

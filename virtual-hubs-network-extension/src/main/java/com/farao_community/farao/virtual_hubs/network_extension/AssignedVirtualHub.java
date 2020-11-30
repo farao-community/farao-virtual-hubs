@@ -7,12 +7,12 @@
 package com.farao_community.farao.virtual_hubs.network_extension;
 
 import com.powsybl.commons.extensions.Extension;
-import com.powsybl.iidm.network.VoltageLevel;
+import com.powsybl.iidm.network.Injection;
 
 /**
  * @author Baptiste Seguinot {@literal <baptiste.seguinot@rte-france.com>}
  */
-public interface AssignedVirtualHub extends Extension<VoltageLevel> {
+public interface AssignedVirtualHub<T extends Injection<T>> extends Extension<T> {
 
     @Override
     default String getName() {
