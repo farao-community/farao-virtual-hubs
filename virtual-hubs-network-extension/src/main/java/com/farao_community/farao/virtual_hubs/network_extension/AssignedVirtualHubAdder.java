@@ -7,25 +7,25 @@
 package com.farao_community.farao.virtual_hubs.network_extension;
 
 import com.powsybl.commons.extensions.ExtensionAdder;
-import com.powsybl.iidm.network.VoltageLevel;
+import com.powsybl.iidm.network.Injection;
 
 /**
  * @author Baptiste Seguinot {@literal <baptiste.seguinot@rte-france.com>}
  */
-public interface AssignedVirtualHubAdder extends ExtensionAdder<VoltageLevel, AssignedVirtualHub> {
+public interface AssignedVirtualHubAdder<T extends Injection<T>> extends ExtensionAdder<T, AssignedVirtualHub<T>> {
 
     @Override
     default Class<AssignedVirtualHub> getExtensionClass() {
         return AssignedVirtualHub.class;
     }
 
-    AssignedVirtualHubAdder withCode(String code);
+    AssignedVirtualHubAdder<T> withCode(String code);
 
-    AssignedVirtualHubAdder withEic(String eic);
+    AssignedVirtualHubAdder<T>  withEic(String eic);
 
-    AssignedVirtualHubAdder withMcParticipant(boolean isMcParticipant);
+    AssignedVirtualHubAdder<T>  withMcParticipant(boolean isMcParticipant);
 
-    AssignedVirtualHubAdder withNodeName(String nodeName);
+    AssignedVirtualHubAdder<T>  withNodeName(String nodeName);
 
-    AssignedVirtualHubAdder withRelatedMa(String relatedMa);
+    AssignedVirtualHubAdder<T>  withRelatedMa(String relatedMa);
 }

@@ -7,12 +7,12 @@
 package com.farao_community.farao.virtual_hubs.network_extension;
 
 import com.powsybl.commons.extensions.AbstractExtensionAdder;
-import com.powsybl.iidm.network.VoltageLevel;
+import com.powsybl.iidm.network.Injection;
 
 /**
  * @author Baptiste Seguinot {@literal <baptiste.seguinot@rte-france.com>}
  */
-public class AssignedVirtualHubAdderImpl extends AbstractExtensionAdder<VoltageLevel, AssignedVirtualHub> implements AssignedVirtualHubAdder {
+public class AssignedVirtualHubAdderImpl<T extends Injection<T>> extends AbstractExtensionAdder<T, AssignedVirtualHub<T>> implements AssignedVirtualHubAdder<T> {
 
     private String code;
     private String eic;
@@ -20,37 +20,37 @@ public class AssignedVirtualHubAdderImpl extends AbstractExtensionAdder<VoltageL
     private String nodeName;
     private String relatedMa;
 
-    public AssignedVirtualHubAdderImpl(VoltageLevel voltageLevel) {
-        super(voltageLevel);
+    public AssignedVirtualHubAdderImpl(T extendable) {
+        super(extendable);
     }
 
-    public AssignedVirtualHubAdderImpl withCode(String code) {
+    public AssignedVirtualHubAdder<T>  withCode(String code) {
         this.code = code;
         return this;
     }
 
-    public AssignedVirtualHubAdderImpl withEic(String eic) {
+    public AssignedVirtualHubAdder<T>  withEic(String eic) {
         this.eic = eic;
         return this;
     }
 
-    public AssignedVirtualHubAdderImpl withMcParticipant(boolean isMcParticipant) {
+    public AssignedVirtualHubAdder<T>  withMcParticipant(boolean isMcParticipant) {
         this.isMcParticipant = isMcParticipant;
         return this;
     }
 
-    public AssignedVirtualHubAdderImpl withNodeName(String nodeName) {
+    public AssignedVirtualHubAdder<T>  withNodeName(String nodeName) {
         this.nodeName = nodeName;
         return this;
     }
 
-    public AssignedVirtualHubAdder withRelatedMa(String relatedMa) {
+    public AssignedVirtualHubAdder<T>  withRelatedMa(String relatedMa) {
         this.relatedMa = relatedMa;
         return this;
     }
 
     @Override
-    public AssignedVirtualHubImpl createExtension(VoltageLevel voltageLevel) {
-        return new AssignedVirtualHubImpl(code, eic, isMcParticipant, nodeName, relatedMa);
+    public AssignedVirtualHubImpl<T> createExtension(T extendable) {
+        return new AssignedVirtualHubImpl<>(code, eic, isMcParticipant, nodeName, relatedMa);
     }
 }

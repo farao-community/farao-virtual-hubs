@@ -7,8 +7,9 @@
 package com.farao_community.farao.virtual_hubs.network_extension;
 
 import com.powsybl.iidm.import_.Importers;
+import com.powsybl.iidm.network.DanglingLine;
+import com.powsybl.iidm.network.Generator;
 import com.powsybl.iidm.network.Network;
-import com.powsybl.iidm.network.VoltageLevel;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -31,11 +32,11 @@ public class AssignedVirtualHubTest {
     }
 
     @Test
-    public void testExtensionAdder1() {
+    public void testExtensionAdderOnGenerator() {
         Network network = Importers.loadNetwork(SMALL_NETWORK_FILE_NAME, getClass().getResourceAsStream("/" + SMALL_NETWORK_FILE_NAME));
-        VoltageLevel anyVoltageLevel = network.getVoltageLevels().iterator().next();
+        Generator anyGenerator = network.getGenerators().iterator().next();
 
-        anyVoltageLevel.newExtension(AssignedVirtualHubAdder.class)
+        anyGenerator.newExtension(AssignedVirtualHubAdder.class)
             .withCode("CODE__")
             .withEic("19VDUEGOLKAAAAS")
             .withMcParticipant(true)
@@ -43,7 +44,7 @@ public class AssignedVirtualHubTest {
             .withRelatedMa("BE")
             .add();
 
-        AssignedVirtualHub virtualHub = anyVoltageLevel.getExtension(AssignedVirtualHub.class);
+        AssignedVirtualHub<Generator> virtualHub = anyGenerator.getExtension(AssignedVirtualHub.class);
 
         assertNotNull(virtualHub);
         assertEquals("CODE__", virtualHub.getCode());
@@ -51,5 +52,29 @@ public class AssignedVirtualHubTest {
         assertTrue(virtualHub.isMcParticipant());
         assertEquals("", virtualHub.getNodeName());
         assertEquals("BE", virtualHub.getRelatedMa());
+    }
+
+
+    @Test
+    public void testExtensionAdderOnDanglingLine() {
+        Network network = Importers.loadNetwork(SMALL_NETWORK_FILE_NAME, getClass().getResourceAsStream("/" + SMALL_NETWORK_FILE_NAME));
+        DanglingLine anyDanglingLine = network.getDanglingLines().iterator().next();
+
+        anyDanglingLine.newExtension(AssignedVirtualHubAdder.class)
+            .withCode("__CODE")
+            .withEic("19VDUEGOLKAAAAS")
+            .withMcParticipant(true)
+            .withNodeName("UCTENODE")
+            .withRelatedMa(null)
+            .add();
+
+        AssignedVirtualHub<DanglingLine> virtualHub = anyDanglingLine.getExtension(AssignedVirtualHub.class);
+
+        assertNotNull(virtualHub);
+        assertEquals("__CODE", virtualHub.getCode());
+        assertEquals("19VDUEGOLKAAAAS", virtualHub.getEic());
+        assertTrue(virtualHub.isMcParticipant());
+        assertEquals("UCTENODE", virtualHub.getNodeName());
+        assertNull(virtualHub.getRelatedMa());
     }
 }
