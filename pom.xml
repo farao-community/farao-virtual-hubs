@@ -52,7 +52,7 @@
 		<!-- Project properties -->
 		<java.version>1.8</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		
+
 		<!-- Dependencies versions -->
 		<commonsio.version>2.7</commonsio.version>
 		<h2.version>1.4.200</h2.version>

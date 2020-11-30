@@ -19,13 +19,13 @@ public interface AssignedVirtualHubAdder<T extends Injection<T>> extends Extensi
         return AssignedVirtualHub.class;
     }
 
-    AssignedVirtualHubAdder withCode(String code);
+    AssignedVirtualHubAdder<T> withCode(String code);
 
-    AssignedVirtualHubAdder withEic(String eic);
+    AssignedVirtualHubAdder<T>  withEic(String eic);
 
-    AssignedVirtualHubAdder withMcParticipant(boolean isMcParticipant);
+    AssignedVirtualHubAdder<T>  withMcParticipant(boolean isMcParticipant);
 
-    AssignedVirtualHubAdder withNodeName(String nodeName);
+    AssignedVirtualHubAdder<T>  withNodeName(String nodeName);
 
-    AssignedVirtualHubAdder withRelatedMa(String relatedMa);
+    AssignedVirtualHubAdder<T>  withRelatedMa(String relatedMa);
 }

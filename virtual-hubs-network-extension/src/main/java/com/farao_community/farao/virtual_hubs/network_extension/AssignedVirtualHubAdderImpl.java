@@ -24,27 +24,27 @@ public class AssignedVirtualHubAdderImpl<T extends Injection<T>> extends Abstrac
         super(extendable);
     }
 
-    public AssignedVirtualHubAdderImpl withCode(String code) {
+    public AssignedVirtualHubAdder<T>  withCode(String code) {
         this.code = code;
         return this;
     }
 
-    public AssignedVirtualHubAdderImpl withEic(String eic) {
+    public AssignedVirtualHubAdder<T>  withEic(String eic) {
         this.eic = eic;
         return this;
     }
 
-    public AssignedVirtualHubAdderImpl withMcParticipant(boolean isMcParticipant) {
+    public AssignedVirtualHubAdder<T>  withMcParticipant(boolean isMcParticipant) {
         this.isMcParticipant = isMcParticipant;
         return this;
     }
 
-    public AssignedVirtualHubAdderImpl withNodeName(String nodeName) {
+    public AssignedVirtualHubAdder<T>  withNodeName(String nodeName) {
         this.nodeName = nodeName;
         return this;
     }
 
-    public AssignedVirtualHubAdder withRelatedMa(String relatedMa) {
+    public AssignedVirtualHubAdder<T>  withRelatedMa(String relatedMa) {
         this.relatedMa = relatedMa;
         return this;
     }
