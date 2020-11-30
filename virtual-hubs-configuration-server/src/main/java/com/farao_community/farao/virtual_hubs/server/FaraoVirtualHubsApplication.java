@@ -14,9 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @SpringBootApplication
 public class FaraoVirtualHubsApplication {
-
-	public static void main(String[] args) {
-		SpringApplication.run(FaraoVirtualHubsApplication.class, args);
-	}
-
+    public static void main(String[] args) {
+        SpringApplication.run(FaraoVirtualHubsApplication.class, args);
+    }
 }

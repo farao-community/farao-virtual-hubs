@@ -59,9 +59,9 @@ class JsonVirtualHubsConfigurationTest {
     @Test
     public void checkThatIncorrectConfigurationImportThrows() {
         VirtualHubsConfigurationDeserializationException thrown = assertThrows(
-                VirtualHubsConfigurationDeserializationException.class,
-                () -> JsonVirtualHubsConfiguration.importConfiguration(getClass().getResourceAsStream("/invalidConfiguration.json")),
-                "Invalid parameter in configuration should throw"
+            VirtualHubsConfigurationDeserializationException.class,
+            () -> JsonVirtualHubsConfiguration.importConfiguration(getClass().getResourceAsStream("/invalidConfiguration.json")),
+            "Invalid parameter in configuration should throw"
         );
         assertEquals("Attribute 'brokenParam' invalid for configuration", thrown.getMessage());
     }
@@ -69,9 +69,9 @@ class JsonVirtualHubsConfigurationTest {
     @Test
     public void checkThatIncorrectMarketAreaImportThrows() {
         VirtualHubsConfigurationDeserializationException thrown = assertThrows(
-                VirtualHubsConfigurationDeserializationException.class,
-                () -> JsonVirtualHubsConfiguration.importConfiguration(getClass().getResourceAsStream("/invalidMarketArea.json")),
-                "Invalid parameter in market area should throw"
+            VirtualHubsConfigurationDeserializationException.class,
+            () -> JsonVirtualHubsConfiguration.importConfiguration(getClass().getResourceAsStream("/invalidMarketArea.json")),
+            "Invalid parameter in market area should throw"
         );
         assertEquals("Attribute 'brokenParam' invalid for market area", thrown.getMessage());
 
@@ -80,12 +80,10 @@ class JsonVirtualHubsConfigurationTest {
     @Test
     public void checkThatIncorrectVirtualHubImportThrows() {
         VirtualHubsConfigurationDeserializationException thrown = assertThrows(
-                VirtualHubsConfigurationDeserializationException.class,
-                () -> JsonVirtualHubsConfiguration.importConfiguration(getClass().getResourceAsStream("/invalidVirtualHub.json")),
-                "Invalid parameter in virtual hub should throw"
+            VirtualHubsConfigurationDeserializationException.class,
+            () -> JsonVirtualHubsConfiguration.importConfiguration(getClass().getResourceAsStream("/invalidVirtualHub.json")),
+            "Invalid parameter in virtual hub should throw"
         );
         assertEquals("Attribute 'brokenParam' invalid for virtual hub", thrown.getMessage());
-
     }
-
 }

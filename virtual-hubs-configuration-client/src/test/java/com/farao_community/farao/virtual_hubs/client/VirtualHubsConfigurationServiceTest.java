@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
-
 class VirtualHubsConfigurationServiceTest {
     @Test
     public void myTest() {
