@@ -49,9 +49,16 @@
 	</modules>
 
 	<properties>
+		<!-- Project properties -->
 		<java.version>1.8</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
+		<!-- Sonar properties -->
+		<sonar.coverage.jacoco.xmlReportPaths>
+			target/site/jacoco/jacoco.xml
+		</sonar.coverage.jacoco.xmlReportPaths>
+
+		<!-- Dependencies versions -->
 		<commonsio.version>2.7</commonsio.version>
 		<h2.version>1.4.200</h2.version>
 		<jackson.databind.version>2.11.0</jackson.databind.version>
