@@ -38,7 +38,7 @@ public class VirtualHubAssignerTest {
     }
 
     @Test
-    public void TestAssignerOnRealNode() {
+    public void testAssignerOnRealNode() {
         virtualHubs.add(new VirtualHub("code_vh1", "eic_vh1", true, "NNL2AA1 ", new MarketArea("NL", "eic_nl", true)));
         new VirtualHubAssigner(virtualHubs).addNetworkExtensions(network);
 
@@ -52,7 +52,7 @@ public class VirtualHubAssignerTest {
     }
 
     @Test
-    public void TestAssignerOnXNode() {
+    public void testAssignerOnXNode() {
         virtualHubs.add(new VirtualHub("code_vh2", "eic_vh2", true, "X_GBFR1 ", new MarketArea("FR", "eic_fr", true)));
         new VirtualHubAssigner(virtualHubs).addNetworkExtensions(network);
 
@@ -66,7 +66,7 @@ public class VirtualHubAssignerTest {
     }
 
     @Test
-    public void TestAssignerOnSeveralNodes() {
+    public void testAssignerOnSeveralNodes() {
         virtualHubs.add(new VirtualHub("code_vh1", "eic_vh1", true, "NNL2AA1 ", new MarketArea("NL", "eic_nl", true)));
         virtualHubs.add(new VirtualHub("code_vh2", "eic_vh2", true, "X_GBFR1 ", new MarketArea("FR", "eic_fr", true)));
 
@@ -78,9 +78,8 @@ public class VirtualHubAssignerTest {
         assertTrue(danglingLine.isPresent());
     }
 
-
     @Test
-    public void TestAssignerOnNonExistingNode() {
+    public void testAssignerOnNonExistingNode() {
         virtualHubs.add(new VirtualHub("code_vh3", "eic_vh3", true, "UNKNOWN_", new MarketArea("FR", "eic_fr", true)));
 
         new VirtualHubAssigner(virtualHubs).addNetworkExtensions(network);

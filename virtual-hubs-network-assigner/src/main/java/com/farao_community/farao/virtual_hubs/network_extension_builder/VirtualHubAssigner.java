@@ -28,13 +28,11 @@ public class VirtualHubAssigner {
         this.virtualHubs = virtualHubs;
     }
 
-    public void addNetworkExtensions(Network network)
-    {
+    public void addNetworkExtensions(Network network) {
         virtualHubs.forEach(vh -> addNetworkExtension(network, vh));
     }
 
-    private void addNetworkExtension(Network network, VirtualHub virtualHub)
-    {
+    private void addNetworkExtension(Network network, VirtualHub virtualHub) {
         Optional<Bus> bus = findBusById(network, virtualHub.getNodeName());
         if (bus.isPresent()) {
             // virtual hub is on a real network node
@@ -83,6 +81,4 @@ public class VirtualHubAssigner {
             .filter(danglingLine -> danglingLine.getUcteXnodeCode().equals(xNodeId))
             .findFirst();
     }
-
-
 }
