@@ -54,7 +54,6 @@ public class AssignedVirtualHubTest {
         assertEquals("BE", virtualHub.getRelatedMa());
     }
 
-
     @Test
     public void testExtensionAdderOnDanglingLine() {
         Network network = Importers.loadNetwork(SMALL_NETWORK_FILE_NAME, getClass().getResourceAsStream("/" + SMALL_NETWORK_FILE_NAME));
