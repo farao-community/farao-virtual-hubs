@@ -40,7 +40,6 @@
 		<module>virtual-hubs-configuration-server</module>
 		<module>virtual-hubs-json</module>
 		<module>virtual-hubs-network-extension</module>
-
 		<!--
 		<module>virtual-hubs-network-extension-client</module>
 		<module>virtual-hubs-network-extension-server</module>
@@ -60,6 +59,8 @@
 		<jib.version>2.4.0</jib.version>
 		<junit.version>4.13.1</junit.version>
 		<junit.jupiter.version>5.6.2</junit.jupiter.version>
+		<junit.version>5.6.2</junit.version>
+		<maven.checkstyle.version>3.1.1</maven.checkstyle.version>
 		<maven.compiler.version>3.8.1</maven.compiler.version>
 		<maven.deploy.version>2.8.2</maven.deploy.version>
 		<maven.gpg.version>1.6</maven.gpg.version>
@@ -108,6 +109,8 @@
 				<artifactId>modelmapper</artifactId>
 				<version>${modelmapper.version}</version>
 			</dependency>
+
+			<!-- Runtime dependencies -->
 			<dependency>
 				<groupId>com.h2database</groupId>
 				<artifactId>h2</artifactId>
@@ -216,6 +219,36 @@
 		</pluginManagement>
 	</build>
 	<profiles>
+		<profile>
+			<id>checks</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-checkstyle-plugin</artifactId>
+						<version>${maven.checkstyle.version}</version>
+						<executions>
+							<execution>
+								<phase>validate</phase>
+								<goals>
+									<goal>check</goal>
+								</goals>
+								<configuration>
+									<configLocation>checkstyle.xml</configLocation>
+									<suppressionsLocation>checkstyle-suppressions.xml</suppressionsLocation>
+									<consoleOutput>true</consoleOutput>
+									<failsOnError>true</failsOnError>
+									<includeTestSourceDirectory>true</includeTestSourceDirectory>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 		<profile>
 			<id>coverage</id>
 			<build>

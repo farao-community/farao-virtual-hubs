@@ -30,9 +30,9 @@ class MarketAreaTest {
     @Test
     public void checkThatMarketAreaCreationThrowsWhenCodeIsNull() {
         NullPointerException thrown = assertThrows(
-                NullPointerException.class,
-                () -> new MarketArea(null, "AreaEic", true),
-                "Null code in MarketArea creation should throw but does not"
+            NullPointerException.class,
+            () -> new MarketArea(null, "AreaEic", true),
+            "Null code in MarketArea creation should throw but does not"
         );
         assertEquals("MarketArea creation does not allow null code", thrown.getMessage());
     }
@@ -40,9 +40,9 @@ class MarketAreaTest {
     @Test
     public void checkThatMarketAreaCreationThrowsWhenEicIsNull() {
         NullPointerException thrown = assertThrows(
-                NullPointerException.class,
-                () -> new MarketArea("AreaCode", null, true),
-                "Null eic in MarketArea creation should throw but does not"
+            NullPointerException.class,
+            () -> new MarketArea("AreaCode", null, true),
+            "Null eic in MarketArea creation should throw but does not"
         );
         assertEquals("MarketArea creation does not allow null eic", thrown.getMessage());
     }

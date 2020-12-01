@@ -31,9 +31,9 @@ class VirtualHubsConfigurationTest {
     public void checkThatAddingNullMarketAreaInConfigurationThrows() {
         VirtualHubsConfiguration configuration = new VirtualHubsConfiguration();
         NullPointerException thrown = assertThrows(
-                NullPointerException.class,
-                () -> configuration.addMarketArea(null),
-                "Null market area addition in configuration should throw but does not"
+            NullPointerException.class,
+            () -> configuration.addMarketArea(null),
+            "Null market area addition in configuration should throw but does not"
         );
         assertEquals("Virtual hubs configuration does not allow adding null market area", thrown.getMessage());
     }
@@ -42,9 +42,9 @@ class VirtualHubsConfigurationTest {
     public void checkThatAddingNullVirtualHubInConfigurationThrows() {
         VirtualHubsConfiguration configuration = new VirtualHubsConfiguration();
         NullPointerException thrown = assertThrows(
-                NullPointerException.class,
-                () -> configuration.addVirtualHub(null),
-                "Null virtual hub addition in configuration should throw but does not"
+            NullPointerException.class,
+            () -> configuration.addVirtualHub(null),
+            "Null virtual hub addition in configuration should throw but does not"
         );
         assertEquals("Virtual hubs configuration does not allow adding null virtual hub", thrown.getMessage());
     }

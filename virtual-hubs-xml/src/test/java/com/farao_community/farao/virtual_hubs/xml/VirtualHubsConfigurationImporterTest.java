@@ -29,9 +29,9 @@ class VirtualHubsConfigurationImporterTest {
     public void checkThatConfigurationImportWithNullInputStreamThrows() {
         VirtualHubsConfigurationImporter importer = new VirtualHubsConfigurationImporter();
         NullPointerException thrown = assertThrows(
-                NullPointerException.class,
-                () -> importer.importConfiguration(null),
-                "Null input stream as importConfiguration input should throw but does not"
+            NullPointerException.class,
+            () -> importer.importConfiguration(null),
+            "Null input stream as importConfiguration input should throw but does not"
         );
         assertEquals("Cannot import configuration from null input stream", thrown.getMessage());
     }
@@ -40,9 +40,9 @@ class VirtualHubsConfigurationImporterTest {
     public void checkThatInvalidInputStreamThrowsException() {
         VirtualHubsConfigurationImporter importer = new VirtualHubsConfigurationImporter();
         VirtualHubsConfigProcessingException thrown = assertThrows(
-                VirtualHubsConfigProcessingException.class,
-                () -> importer.importConfiguration(getClass().getResourceAsStream("/truncatedFile.xml")),
-                "Errors in XML processing should be thrown as VirtualHubsConfigProcessingException"
+            VirtualHubsConfigProcessingException.class,
+            () -> importer.importConfiguration(getClass().getResourceAsStream("/truncatedFile.xml")),
+            "Errors in XML processing should be thrown as VirtualHubsConfigProcessingException"
         );
         assertTrue(thrown.getCause() instanceof SAXException);
     }
