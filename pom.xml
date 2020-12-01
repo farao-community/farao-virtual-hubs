@@ -39,6 +39,7 @@
 		<module>virtual-hubs-configuration-client</module>
 		<module>virtual-hubs-configuration-server</module>
 		<module>virtual-hubs-json</module>
+		<module>virtual-hubs-network-assigner</module>
 		<module>virtual-hubs-network-extension</module>
 		<!--
 		<module>virtual-hubs-network-extension-client</module>
@@ -69,6 +70,7 @@
 		<maven.source.version>3.0.1</maven.source.version>
 		<modelmapper.version>2.3.8</modelmapper.version>
 		<powsybl.core.version>3.7.1</powsybl.core.version>
+		<slf4j.version>1.7.30</slf4j.version>
 		<springboot.version>2.3.1.RELEASE</springboot.version>
 	</properties>
 
@@ -107,6 +109,13 @@
 				<groupId>org.modelmapper</groupId>
 				<artifactId>modelmapper</artifactId>
 				<version>${modelmapper.version}</version>
+			</dependency>
+
+			<!-- Runtime dependencies -->
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${slf4j.version}</version>
 			</dependency>
 
 			<!-- Runtime dependencies -->
