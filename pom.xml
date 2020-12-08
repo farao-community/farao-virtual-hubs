@@ -69,7 +69,7 @@
 		<maven.javadoc.version>3.0.0</maven.javadoc.version>
 		<maven.source.version>3.0.1</maven.source.version>
 		<modelmapper.version>2.3.8</modelmapper.version>
-		<powsybl.core.version>3.7.1</powsybl.core.version>
+		<powsybl.core.version>3.8.0</powsybl.core.version>
 		<slf4j.version>1.7.30</slf4j.version>
 		<springboot.version>2.3.1.RELEASE</springboot.version>
 	</properties>
