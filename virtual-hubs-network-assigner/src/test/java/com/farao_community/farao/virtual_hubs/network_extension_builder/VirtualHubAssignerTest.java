@@ -13,27 +13,26 @@ import com.powsybl.iidm.import_.Importers;
 import com.powsybl.iidm.network.DanglingLine;
 import com.powsybl.iidm.network.Generator;
 import com.powsybl.iidm.network.Network;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static junit.framework.TestCase.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Baptiste Seguinot {@literal <baptiste.seguinot@rte-france.com>}
  */
 public class VirtualHubAssignerTest {
 
-    private static final String SMALL_NETWORK_FILE_NAME = "12Nodes_with_Xnodes.xiidm";
     private Network network;
     private List<VirtualHub> virtualHubs;
 
-    @Before
+    @BeforeEach
     public void setUp() {
-        network = Importers.loadNetwork(SMALL_NETWORK_FILE_NAME, getClass().getResourceAsStream("/" + SMALL_NETWORK_FILE_NAME));
+        network = Importers.loadNetwork("12Nodes_with_Xnodes.xiidm", getClass().getResourceAsStream("/" + "12Nodes_with_Xnodes.xiidm"));
         virtualHubs = new ArrayList<>();
     }
 
