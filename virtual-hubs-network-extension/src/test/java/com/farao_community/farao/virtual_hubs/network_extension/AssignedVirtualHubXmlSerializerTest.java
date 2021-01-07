@@ -20,12 +20,12 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * @author Baptiste Seguinot {@literal <baptiste.seguinot@rte-france.com>}
  */
-public class AssignedVirtualHubXmlSerializerTest {
+class AssignedVirtualHubXmlSerializerTest {
 
     private static final String SMALL_NETWORK_FILE_NAME = "12Nodes_with_Xnodes.xiidm";
 
     @Test
-    public void roundTripTest() {
+    void roundTripTest() {
         // load network
         Network originalNetwork = Importers.loadNetwork(SMALL_NETWORK_FILE_NAME, getClass().getResourceAsStream("/" + SMALL_NETWORK_FILE_NAME));
 

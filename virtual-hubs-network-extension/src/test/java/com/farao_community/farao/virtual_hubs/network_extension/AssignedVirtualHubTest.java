@@ -17,12 +17,12 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * @author Baptiste Seguinot {@literal <baptiste.seguinot@rte-france.com>}
  */
-public class AssignedVirtualHubTest {
+class AssignedVirtualHubTest {
 
     private static final String SMALL_NETWORK_FILE_NAME = "12Nodes_with_Xnodes.xiidm";
 
     @Test
-    public void testConstructor() {
+    void testConstructor() {
         AssignedVirtualHub virtualHub = new AssignedVirtualHubImpl("code", "10XAAAUDHGKAAAAS", false, "12345678", "FR");
         assertEquals("code", virtualHub.getCode());
         assertEquals("10XAAAUDHGKAAAAS", virtualHub.getEic());
@@ -32,7 +32,7 @@ public class AssignedVirtualHubTest {
     }
 
     @Test
-    public void testExtensionAdderOnGenerator() {
+    void testExtensionAdderOnGenerator() {
         Network network = Importers.loadNetwork(SMALL_NETWORK_FILE_NAME, getClass().getResourceAsStream("/" + SMALL_NETWORK_FILE_NAME));
         Generator anyGenerator = network.getGenerators().iterator().next();
 
@@ -55,7 +55,7 @@ public class AssignedVirtualHubTest {
     }
 
     @Test
-    public void testExtensionAdderOnDanglingLine() {
+    void testExtensionAdderOnDanglingLine() {
         Network network = Importers.loadNetwork(SMALL_NETWORK_FILE_NAME, getClass().getResourceAsStream("/" + SMALL_NETWORK_FILE_NAME));
         DanglingLine anyDanglingLine = network.getDanglingLines().iterator().next();
 
