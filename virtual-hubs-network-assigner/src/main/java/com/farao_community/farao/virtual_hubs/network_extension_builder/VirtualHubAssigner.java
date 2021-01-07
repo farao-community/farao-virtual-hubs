@@ -28,45 +28,49 @@ public class VirtualHubAssigner {
         this.virtualHubs = virtualHubs;
     }
 
-    public void addNetworkExtensions(Network network) {
-        virtualHubs.forEach(vh -> addNetworkExtension(network, vh));
+    public void addVirtualLoads(Network network) {
+        virtualHubs.forEach(vh -> addVirtualLoad(network, vh));
     }
 
-    private void addNetworkExtension(Network network, VirtualHub virtualHub) {
+    private void addVirtualLoad(Network network, VirtualHub virtualHub) {
+
         Optional<Bus> bus = findBusById(network, virtualHub.getNodeName());
         if (bus.isPresent()) {
             // virtual hub is on a real network node
-            Generator generator = bus.get().getGenerators().iterator().next();
-
-            if (Objects.isNull(generator)) {
-                LOGGER.warn("Virtual hub cannot be assigned on bus {} as it does not contain any generator", virtualHub.getNodeName());
-                return;
-            }
-
-            generator.newExtension(AssignedVirtualHubAdder.class)
-                .withCode(virtualHub.getCode())
-                .withEic(virtualHub.getEic())
-                .withMcParticipant(virtualHub.isMcParticipant())
-                .withNodeName(virtualHub.getNodeName())
-                .withRelatedMa(Objects.isNull(virtualHub.getRelatedMa()) ? null : virtualHub.getRelatedMa().getCode())
-                .add();
+            addVirtualHubOnNewFictitiousLoad(bus.get(), virtualHub);
             return;
         }
 
         Optional<DanglingLine> danglingLine = findDanglingLineWithXNode(network, virtualHub.getNodeName());
         if (danglingLine.isPresent()) {
             // virtual hub is on a Xnode which has been merged in a dangling line during network import
-            danglingLine.get().newExtension(AssignedVirtualHubAdder.class)
-                .withCode(virtualHub.getCode())
-                .withEic(virtualHub.getEic())
-                .withMcParticipant(virtualHub.isMcParticipant())
-                .withNodeName(virtualHub.getNodeName())
-                .withRelatedMa(Objects.isNull(virtualHub.getRelatedMa()) ? null : virtualHub.getRelatedMa().getCode())
-                .add();
+            addVirtualHubOnNewFictitiousLoad(danglingLine.get().getTerminal().getBusBreakerView().getConnectableBus(), virtualHub);
             return;
         }
 
         LOGGER.warn("Virtual hub cannot be assigned on node {} as it was not found in the network", virtualHub.getNodeName());
+    }
+
+    private void addVirtualHubOnNewFictitiousLoad(Bus bus, VirtualHub virtualHub) {
+        // add a fictitious load to this bus
+        Load load = bus.getVoltageLevel().newLoad()
+            .setBus(bus.getId())
+            .setId(virtualHub.getEic() + "_virtualLoad")
+            .setEnsureIdUnicity(true)
+            .setLoadType(LoadType.FICTITIOUS)
+            .setP0(0.).setQ0(0.)
+            .add();
+
+        // the virtual hub is assigned on this load
+        load.newExtension(AssignedVirtualHubAdder.class)
+            .withCode(virtualHub.getCode())
+            .withEic(virtualHub.getEic())
+            .withMcParticipant(virtualHub.isMcParticipant())
+            .withNodeName(virtualHub.getNodeName())
+            .withRelatedMa(Objects.isNull(virtualHub.getRelatedMa()) ? null : virtualHub.getRelatedMa().getCode())
+            .add();
+
+        LOGGER.info("A fictitious load {} has been added to {} in order to assign the virtual hub {}", load.getId(), bus.getId(), virtualHub.getEic());
     }
 
     private Optional<Bus> findBusById(Network network, String id) {
