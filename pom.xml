@@ -75,7 +75,7 @@
 		<maven.source.version>3.2.0</maven.source.version>
 		<maven.surefire.version>2.22.2</maven.surefire.version>
 		<modelmapper.version>2.3.8</modelmapper.version>
-		<powsybl.core.version>4.0.0</powsybl.core.version>
+		<powsybl.core.version>4.2.0</powsybl.core.version>
 		<slf4j.version>1.7.30</slf4j.version>
 		<springboot.version>2.3.1.RELEASE</springboot.version>
 	</properties>
