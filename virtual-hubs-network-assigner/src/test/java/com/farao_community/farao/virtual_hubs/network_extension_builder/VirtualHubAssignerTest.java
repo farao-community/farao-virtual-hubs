@@ -64,6 +64,19 @@ class VirtualHubAssignerTest {
     }
 
     @Test
+    void testAssignerDisconnectedXNode() {
+
+        network.getDanglingLine("FFR1AA1  X_GBFR1  1").getTerminal().disconnect();
+
+        virtualHubs.add(new VirtualHub("code_vh2", "eic_vh2", true, "X_GBFR1 ", new MarketArea("FR", "eic_fr", true)));
+        new VirtualHubAssigner(virtualHubs).addVirtualLoads(network);
+
+        Optional<Load> load = network.getLoadStream().filter(l -> l.getExtension(AssignedVirtualHub.class) != null).findFirst();
+        assertTrue(load.isEmpty());
+        assertNull(network.getLoad("eic_vh2_virtualLoad"));
+    }
+
+    @Test
     void testAssignerOnSeveralNodes() {
         virtualHubs.add(new VirtualHub("code_vh1", "eic_vh1", true, "NNL2AA1 ", new MarketArea("NL", "eic_nl", true)));
         virtualHubs.add(new VirtualHub("code_vh2", "eic_vh2", true, "X_GBFR1 ", new MarketArea("FR", "eic_fr", true)));
