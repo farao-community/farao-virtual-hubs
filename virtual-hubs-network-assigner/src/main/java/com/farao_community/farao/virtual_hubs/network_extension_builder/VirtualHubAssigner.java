@@ -44,11 +44,15 @@ public class VirtualHubAssigner {
         Optional<DanglingLine> danglingLine = findDanglingLineWithXNode(network, virtualHub.getNodeName());
         if (danglingLine.isPresent()) {
             // virtual hub is on a Xnode which has been merged in a dangling line during network import
-            addVirtualHubOnNewFictitiousLoad(danglingLine.get().getTerminal().getBusBreakerView().getConnectableBus(), virtualHub);
+            if (danglingLine.get().getTerminal().isConnected()) {
+                addVirtualHubOnNewFictitiousLoad(danglingLine.get().getTerminal().getBusBreakerView().getConnectableBus(), virtualHub);
+            } else {
+                LOGGER.warn("Virtual hub {} was not assigned on node {} as it is disconnected from the main network", virtualHub.getEic(), virtualHub.getNodeName());
+            }
             return;
         }
 
-        LOGGER.warn("Virtual hub cannot be assigned on node {} as it was not found in the network", virtualHub.getNodeName());
+        LOGGER.warn("Virtual hub {} cannot be assigned on node {} as it was not found in the network", virtualHub.getEic(), virtualHub.getNodeName());
     }
 
     private void addVirtualHubOnNewFictitiousLoad(Bus bus, VirtualHub virtualHub) {
