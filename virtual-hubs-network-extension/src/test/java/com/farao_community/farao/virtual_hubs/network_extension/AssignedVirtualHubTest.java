@@ -6,7 +6,6 @@
  */
 package com.farao_community.farao.virtual_hubs.network_extension;
 
-import com.powsybl.iidm.import_.Importers;
 import com.powsybl.iidm.network.DanglingLine;
 import com.powsybl.iidm.network.Generator;
 import com.powsybl.iidm.network.Network;
@@ -33,7 +32,7 @@ class AssignedVirtualHubTest {
 
     @Test
     void testExtensionAdderOnGenerator() {
-        Network network = Importers.loadNetwork(SMALL_NETWORK_FILE_NAME, getClass().getResourceAsStream("/" + SMALL_NETWORK_FILE_NAME));
+        Network network = Network.read(SMALL_NETWORK_FILE_NAME, getClass().getResourceAsStream("/" + SMALL_NETWORK_FILE_NAME));
         Generator anyGenerator = network.getGenerators().iterator().next();
 
         anyGenerator.newExtension(AssignedVirtualHubAdder.class)
@@ -56,7 +55,7 @@ class AssignedVirtualHubTest {
 
     @Test
     void testExtensionAdderOnDanglingLine() {
-        Network network = Importers.loadNetwork(SMALL_NETWORK_FILE_NAME, getClass().getResourceAsStream("/" + SMALL_NETWORK_FILE_NAME));
+        Network network = Network.read(SMALL_NETWORK_FILE_NAME, getClass().getResourceAsStream("/" + SMALL_NETWORK_FILE_NAME));
         DanglingLine anyDanglingLine = network.getDanglingLines().iterator().next();
 
         anyDanglingLine.newExtension(AssignedVirtualHubAdder.class)

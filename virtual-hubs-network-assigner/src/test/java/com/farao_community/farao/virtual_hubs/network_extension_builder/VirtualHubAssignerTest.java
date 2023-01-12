@@ -9,7 +9,6 @@ package com.farao_community.farao.virtual_hubs.network_extension_builder;
 import com.farao_community.farao.virtual_hubs.MarketArea;
 import com.farao_community.farao.virtual_hubs.VirtualHub;
 import com.farao_community.farao.virtual_hubs.network_extension.AssignedVirtualHub;
-import com.powsybl.iidm.import_.Importers;
 import com.powsybl.iidm.network.Load;
 import com.powsybl.iidm.network.Network;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,7 +30,7 @@ class VirtualHubAssignerTest {
 
     @BeforeEach
     void setUp() {
-        network = Importers.loadNetwork("12Nodes_with_Xnodes.xiidm", getClass().getResourceAsStream("/" + "12Nodes_with_Xnodes.xiidm"));
+        network = Network.read("12Nodes_with_Xnodes.xiidm", getClass().getResourceAsStream("/" + "12Nodes_with_Xnodes.xiidm"));
         virtualHubs = new ArrayList<>();
     }
 
