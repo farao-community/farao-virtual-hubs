@@ -6,7 +6,6 @@
  */
 package com.farao_community.farao.virtual_hubs.network_extension;
 
-import com.powsybl.iidm.import_.Importers;
 import com.powsybl.iidm.network.DanglingLine;
 import com.powsybl.iidm.network.Generator;
 import com.powsybl.iidm.network.Network;
@@ -27,7 +26,7 @@ class AssignedVirtualHubXmlSerializerTest {
     @Test
     void roundTripTest() {
         // load network
-        Network originalNetwork = Importers.loadNetwork(SMALL_NETWORK_FILE_NAME, getClass().getResourceAsStream("/" + SMALL_NETWORK_FILE_NAME));
+        Network originalNetwork = Network.read(SMALL_NETWORK_FILE_NAME, getClass().getResourceAsStream("/" + SMALL_NETWORK_FILE_NAME));
 
         // add extensions
         DanglingLine dl = originalNetwork.getDanglingLine("FFR1AA1  X_GBFR1  1");
